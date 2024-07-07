@@ -3,7 +3,7 @@ import { SearchBar } from "./SearchBar/SearchBar";
 import { ISearchItem } from "./SearchPageItem/SearchItem";
 import { SearchList } from "./SearchList/SearchList";
 import { Pagination } from "./Pagination/Pagination";
-import { api } from "../../api";
+import { api, ApiResponse } from "../../api";
 
 interface ISearchPageState {
   isLoading: boolean;
@@ -12,13 +12,6 @@ interface ISearchPageState {
   currentPage: number;
   maxCount: number;
   searchTerm: string;
-}
-
-interface ApiResponse {
-  count: number;
-  next: string;
-  previous: string | null;
-  results: Array<ISearchItem>;
 }
 
 export class SearchPage extends Component {
