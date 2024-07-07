@@ -4,6 +4,7 @@ import { ISearchItem } from "./SearchPageItem/SearchItem";
 import { SearchList } from "./SearchList/SearchList";
 import { Pagination } from "./Pagination/Pagination";
 import { api, ApiResponse } from "../../api";
+import { Loader } from "./Loader/Loader";
 
 interface ISearchPageState {
   isLoading: boolean;
@@ -85,7 +86,7 @@ export class SearchPage extends Component {
         </section>
         <section>
           {isLoading ? (
-            <p>Loading...</p>
+            <Loader />
           ) : (
             <>
               <SearchList results={this.state.results} />
