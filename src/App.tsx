@@ -1,7 +1,15 @@
 import { Component } from "react";
+import { SearchPage } from "./components/SearchPage/SearchPage";
+import { ErrorBoundary } from "./components/ErrorBoundary/ErrorBoundary";
 
-export class App extends Component {
+export default class App extends Component {
   render() {
-    return <h1>App</h1>;
+    return (
+      <>
+        <ErrorBoundary>
+          <SearchPage />
+        </ErrorBoundary>
+      </>
+    );
   }
 }
