@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { SearchPage } from "./components/SearchPage/SearchPage";
 import { ErrorBoundary } from "./components/ErrorBoundary/ErrorBoundary";
+import "./index.css";
 
 export default class App extends Component {
   render() {
