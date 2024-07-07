@@ -19,14 +19,14 @@ export class ErrorBoundary extends Component<IProps> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Uncaught error:", error, errorInfo);
+    console.error("Error boundary catch:", error, errorInfo);
   }
 
   render() {
     if (this.state.hasError) {
       return (
         <div className="error">
-          <h1>Something went wrong.</h1>;
+          <h1>Something went wrong.</h1>
         </div>
       );
     }
