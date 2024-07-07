@@ -2,7 +2,6 @@ export function countPages(
   currentPage: number,
   maxPages: number,
 ): Array<number> {
-  console.log(currentPage, maxPages);
   const pages = [];
   if (maxPages > 10) {
     if (currentPage > 5) {
