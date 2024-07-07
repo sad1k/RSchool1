@@ -27,7 +27,6 @@ export class SearchPage extends Component {
 
   componentDidMount(): void {
     const savedSearchTerm = localStorage.getItem("searchTerm") || "";
-    console.log(savedSearchTerm);
     this.setState(
       (prevState) => ({ ...prevState, searchTerm: savedSearchTerm }),
       () => {
