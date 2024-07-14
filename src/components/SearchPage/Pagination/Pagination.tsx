@@ -1,4 +1,4 @@
-import { Component, ReactNode } from "react";
+import { useState } from "react";
 import { countPages } from "../../../utils/countPages";
 import "./styles.css";
 
@@ -8,33 +8,28 @@ interface IProps {
   currentPage: number;
 }
 
-interface IPaginationState {
-  pages: Array<number>;
-}
+export function Pagination({
+  currentPage,
+  maxCount,
+  onChangePage,
+}: IProps): JSX.Element {
+  const [pages, setPages] = useState(
+    countPages(currentPage, Math.ceil(maxCount / 10)),
+  );
 
-export class Pagination extends Component<IProps> {
-  state: Readonly<IPaginationState> = {
-    pages: countPages(
-      this.props.currentPage,
-      Math.ceil(this.props.maxCount / 10),
-    ),
+  const handleClick = function (page: number) {
+    const maxPages: number = Math.ceil(maxCount / 10);
+    setPages(countPages(page, maxPages));
+    onChangePage(page);
   };
 
-  handleClick(page: number) {
-    const maxPages: number = Math.ceil(this.props.maxCount / 10);
-    this.setState({ pages: countPages(page, maxPages) });
-    this.props.onChangePage(page);
-  }
-
-  render(): ReactNode {
-    return (
-      <div className="pagination">
-        {this.state.pages.map((page) => (
-          <button key={page} onClick={() => this.handleClick(page)}>
-            {page}
-          </button>
-        ))}
-      </div>
-    );
-  }
+  return (
+    <div className="pagination">
+      {pages.map((page) => (
+        <button key={page} onClick={() => handleClick(page)}>
+          {page}
+        </button>
+      ))}
+    </div>
+  );
 }
