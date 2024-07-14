@@ -6,19 +6,23 @@ import { Pagination } from "./Pagination/Pagination";
 import { api, ApiResponse } from "../../api";
 import { Loader } from "./Loader/Loader";
 import { useSearchTerm } from "../../hooks/useSearchTerm";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
+import "./styles.css";
 
 export function SearchPage(): JSX.Element {
   const [error, setError] = useState("");
   const [results, setResults] = useState<Array<ISearchItem> | null>(null);
   const [maxCount, setMaxCount] = useState(10);
   const [isLoading, setIsLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useSearchTerm();
+  const { page, detailsId } = useParams<{ page: string; detailsId: string }>();
+  const currentPage = parseInt(page || "1", 10);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const initialSearch = localStorage.getItem("searchTerm") || "";
-    performSearch(initialSearch, currentPage);
-  }, [currentPage]);
+    performSearch(initialSearch, 1);
+  }, []);
 
   const performSearch = function (
     searchTerm: string,
@@ -35,6 +39,7 @@ export function SearchPage(): JSX.Element {
             height: el.height,
             mass: el.mass,
             hair_color: el["hair_color"],
+            url: el.url,
           }));
         });
         setMaxCount(res.count);
@@ -47,12 +52,17 @@ export function SearchPage(): JSX.Element {
 
   const handleSearch = function (searchTerm: string) {
     localStorage.setItem("searchTerm", searchTerm.trim());
+    navigate(`/search/1`);
     performSearch(searchTerm, 1);
   };
 
   const handlePageChange = function (page: number) {
-    setCurrentPage(page);
+    navigate(`/search/${page}`);
     performSearch(searchTerm, page);
+  };
+
+  const handleItemClick = function (id: string) {
+    navigate(`/search/${currentPage}/${id}`);
   };
 
   if (error) {
@@ -61,28 +71,37 @@ export function SearchPage(): JSX.Element {
 
   return (
     <>
-      <section>
-        <SearchBar
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          throwError={() => setError("Something went wrong!")}
-          onSearch={(searchTerm: string) => handleSearch(searchTerm)}
-        />
-      </section>
-      <section>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <>
-            <SearchList results={results} />
-            <Pagination
-              currentPage={currentPage}
-              maxCount={maxCount}
-              onChangePage={(page: number) => handlePageChange(page)}
+      <div className="search-page">
+        <section>
+          <section>
+            <SearchBar
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              throwError={() => setError("Something went wrong!")}
+              onSearch={(searchTerm: string) => handleSearch(searchTerm)}
             />
-          </>
+          </section>
+          <section>
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <>
+                <SearchList results={results} onItemClick={handleItemClick} />
+                <Pagination
+                  currentPage={currentPage}
+                  maxCount={maxCount}
+                  onChangePage={(page: number) => handlePageChange(page)}
+                />
+              </>
+            )}
+          </section>
+        </section>
+        {detailsId && (
+          <section className="details-section">
+            <Outlet />
+          </section>
         )}
-      </section>
+      </div>
     </>
   );
 }
