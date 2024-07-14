@@ -5,15 +5,23 @@ export interface ISearchItem {
   height: string;
   mass: string;
   hair_color: string;
+  url: string;
 }
 
 interface IProps {
   person: ISearchItem;
+  onItemClick: (id: string) => void;
 }
 
-export function SearchItem({ person }: IProps): JSX.Element {
+export function SearchItem({ person, onItemClick }: IProps): JSX.Element {
   return (
-    <div className="person">
+    <div
+      role="item"
+      className="person"
+      onClick={() => {
+        onItemClick(person.url.split("/").at(-2) || "0");
+      }}
+    >
       <span>
         <h2>Имя: {person.name}</h2>
       </span>
