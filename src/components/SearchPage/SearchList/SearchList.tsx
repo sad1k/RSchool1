@@ -1,19 +1,14 @@
-import { ISearchItem, SearchItem } from "../SearchPageItem/SearchItem";
+import { useAppSelector } from "../../../store/store";
+import { SearchItem } from "../SearchPageItem/SearchItem";
 import "./styles.css";
 
-interface IProps {
-  results: Array<ISearchItem> | null;
-  onItemClick: (id: string) => void;
-}
-
-export function SearchList({ results, onItemClick }: IProps): JSX.Element {
+export function SearchList(): JSX.Element {
+  const results = useAppSelector((state) => state.cards.cards);
   return (
     <div className="person-list">
-      {!results && <p>No such results</p>}
+      {results.length === 0 && <p>No such results</p>}
       {results &&
-        results.map((item) => (
-          <SearchItem onItemClick={onItemClick} key={item.name} person={item} />
-        ))}
+        results.map((item) => <SearchItem key={item.name} person={item} />)}
     </div>
   );
 }
