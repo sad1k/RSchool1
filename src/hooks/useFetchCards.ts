@@ -2,12 +2,10 @@ import { useGetPeoplesBySearchPageLimitQuery } from "../store/store";
 import { addCards, setMaxCountCards } from "../store/cardsSlice";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useSearchTerm } from "./useSearchTerm";
 
-export function useFetchCards(
-  searchTerm: string = "",
-  page: number = 1,
-  limit: number = 10,
-) {
+export function useFetchCards(page: number = 1, limit: number = 10) {
+  const searchTerm = useSearchTerm();
   const dispatch = useDispatch();
   const {
     data,
@@ -18,7 +16,6 @@ export function useFetchCards(
     page,
     limit,
   });
-
   useEffect(() => {
     if (!isFetching) {
       dispatch(addCards(data?.results || []));
