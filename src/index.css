@@ -1,4 +1,15 @@
-body {
-  padding: 0;
+body,
+html {
+  height: 100%;
   margin: 0;
+  padding: 0;
+}
+body[data-theme="light"] {
+  background-color: aliceblue;
+  color: #000;
+}
+
+body[data-theme="dark"] {
+  background-color: black;
+  color: #fff;
 }
