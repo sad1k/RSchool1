@@ -1,4 +1,9 @@
+import { useDispatch } from "react-redux";
 import "./styles.css";
+import { addItem, removeItem } from "../../../store/selectedItemsSlice";
+import { useAppSelector } from "../../../store/store";
+import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
 export interface ISearchItem {
   name: string;
@@ -10,18 +15,31 @@ export interface ISearchItem {
 
 interface IProps {
   person: ISearchItem;
-  onItemClick: (id: string) => void;
 }
 
-export function SearchItem({ person, onItemClick }: IProps): JSX.Element {
+export function SearchItem({ person }: IProps): JSX.Element {
+  const checkBoxRef = useRef<HTMLSpanElement>(null);
+
+  const selectedItem = useAppSelector(
+    (state) => state.selectedItems.selectedItems[person.name],
+  );
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const addPerson = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.checked) {
+      dispatch(removeItem(person.name));
+    } else {
+      dispatch(addItem(person));
+    }
+  };
+
+  const goToPerson = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (checkBoxRef.current?.contains(e.target as HTMLElement)) return;
+    navigate(`${person.url.split("/").at(-2)}`);
+  };
   return (
-    <div
-      role="item"
-      className="person"
-      onClick={() => {
-        onItemClick(person.url.split("/").at(-2) || "0");
-      }}
-    >
+    <div role="item" className="person" onClick={(e) => goToPerson(e)}>
       <span>
         <h2>Имя: {person.name}</h2>
       </span>
@@ -33,6 +51,17 @@ export function SearchItem({ person, onItemClick }: IProps): JSX.Element {
       </span>
       <span>
         <h3>Цвет волос: {person.hair_color}</h3>
+      </span>
+      <span ref={checkBoxRef}>
+        <label className="checkbox" htmlFor={`favorite${person.name}`}>
+          <h3>Добавить в избранное</h3>
+          <input
+            onChange={addPerson}
+            checked={!!selectedItem?.name || false}
+            type="checkbox"
+            id={`favorite${person.name}`}
+          />
+        </label>
       </span>
     </div>
   );
