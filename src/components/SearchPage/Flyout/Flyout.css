@@ -1,0 +1,35 @@
+.flyout {
+  position: sticky;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 17px 0px rgba(0, 0, 0, 0.42);
+  width: 300px;
+  padding: 10px;
+}
+
+.flyout.darkTheme {
+  background-color: #4a4a4a;
+  color: whitesmoke;
+  box-shadow: 0px 0px 17px 0px rgba(255, 255, 255, 0.707);
+}
+
+.buttons-panel {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.buttons-panel button {
+  border-radius: 15px;
+  background-color: aquamarine;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.download {
+  text-decoration: none;
+  color: black;
+}
