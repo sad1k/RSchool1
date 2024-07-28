@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Loader } from "../../Loader/Loader";
+import { useGetPeopleByIdQuery } from "../../../../store/store";
+import { ISearchItem } from "../SearchItem";
 
-interface Detail {
+export interface Detail extends ISearchItem {
   name: string;
   height: string;
   mass: string;
@@ -15,29 +16,15 @@ interface Detail {
 
 export function DetailSection(): JSX.Element {
   const { detailsId } = useParams<{ detailsId: string }>();
-  const [detail, setDetail] = useState<Detail | null>(null);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (detailsId) {
-      fetch(`https://swapi.dev/api/people/${detailsId}/`)
-        .then((res) => res.json())
-        .then((data) => {
-          setDetail(data);
-          setLoading(false);
-        });
-    }
-  }, [detailsId]);
-
+  const { data, isFetching } = useGetPeopleByIdQuery(+(detailsId ?? ""));
   const closeDetails = () => {
-    navigate(`/search/1`);
+    navigate(`../`, { relative: "path" });
   };
-
-  if (loading) {
-    return <Loader />;
+  const detail: Detail | undefined = data;
+  if (isFetching || detail === undefined) {
+    return <Loader role="loaderInDetails" />;
   }
-
   return (
     <div className="detail-section">
       <button onClick={closeDetails}>Close</button>
