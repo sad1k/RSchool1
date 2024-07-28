@@ -1,24 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setSearchTerm } from "../store/cardsSlice";
+import { useAppSelector } from "../store/store";
 
-export function useSearchTerm(
-  defaultTerm: string = "",
-): [string, (term: string) => void] {
-  const initialSearchTermRef = useRef<string>(defaultTerm);
-  const [searchTerm, setSearchTerm] = useState(() => {
-    const term = localStorage.getItem("searchTerm");
-    if (term) {
-      initialSearchTermRef.current = term;
-      return term;
-    }
-    return defaultTerm;
-  });
-
+export function useSearchTerm() {
+  const searchTerm = useAppSelector((state) => state.cards.searchTerm);
+  const dispatch = useDispatch();
   useEffect(() => {
-    initialSearchTermRef.current = searchTerm;
-    return () => {
-      localStorage.setItem("searchTerm", initialSearchTermRef.current);
-    };
-  }, [searchTerm]);
+    dispatch(setSearchTerm(searchTerm));
+  }, [dispatch, searchTerm]);
 
-  return [searchTerm, setSearchTerm];
+  return searchTerm;
 }
