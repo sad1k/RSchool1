@@ -28,7 +28,6 @@ test("Check that a loading indicator is displayed while fetching data", async ()
 
   expect(loadingElement).toBeInTheDocument();
 
-  // Wait for the data to be fetched and the component to re-render
   await waitFor(() => {
     expect(loadingElement).not.toBeInTheDocument();
   });
@@ -43,7 +42,6 @@ test("Make sure the detailed card component correctly displays the detailed card
     </MemoryRouter>,
   );
 
-  // Wait for the data to be fetched and the component to re-render
   await waitFor(() => {
     expect(screen.getByText(mockDetail.name)).toBeInTheDocument();
     expect(
@@ -77,16 +75,13 @@ test("Ensure that clicking the close button hides the component", async () => {
     </MemoryRouter>,
   );
 
-  // Wait for the data to be fetched and the component to re-render
   await waitFor(() => {
     expect(screen.getByText(mockDetail.name)).toBeInTheDocument();
   });
 
-  // Click the close button
   const closeButton = screen.getByText(/Close/i);
   userEvent.click(closeButton);
 
-  // Check that the component is hidden (or redirected to the search page)
   await waitFor(() => {
     expect(closeButton).not.toBeInTheDocument();
   });
