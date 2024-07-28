@@ -25,7 +25,7 @@ export class ErrorBoundary extends Component<IProps> {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="error">
+        <div role="error" className="error">
           <h1>Something went wrong.</h1>
         </div>
       );
