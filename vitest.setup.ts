@@ -3,6 +3,19 @@ import { cleanup } from "@testing-library/react";
 import { afterAll, afterEach, beforeAll, vi } from "vitest";
 import { setupServer } from "msw/node";
 
+const mockResponse = vi.fn();
+
+Object.defineProperty(window, "location", {
+  value: {
+    hash: {
+      endsWith: mockResponse,
+      includes: mockResponse,
+    },
+    assign: mockResponse,
+  },
+  writable: true,
+});
+
 afterEach(() => {
   cleanup();
   vi.restoreAllMocks();
