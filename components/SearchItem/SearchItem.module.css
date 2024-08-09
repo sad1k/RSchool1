@@ -1,0 +1,28 @@
+.person {
+  padding: 10px;
+  border-radius: 55px;
+  border: gray 1px solid;
+  width: 300px;
+  height: fit-content;
+}
+
+.person:hover {
+  box-shadow: 0px 0px 17px 0px rgba(0, 0, 0, 0.42);
+}
+
+.checkbox {
+  display: flex;
+  flex-direction: row;
+  column-gap: 20px;
+  align-items: center;
+}
+
+.checkbox input {
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+}
+
+.darkTheme {
+  background-color: #00001a;
+}
