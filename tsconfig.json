@@ -22,6 +22,17 @@
     "incremental": true,
     "plugins": [{ "name": "next" }]
   },
-  "include": ["./src", "./dist/types/**/*.ts", "./next-env.d.ts", "lib/__tests__/addItem.test.tsx", "lib/__tests__/removeAllItems.test.tsx", "lib/__tests__/removeItem.test.tsx", "ThemeContext", "utils", "mocks/api", "mocks/mockPeople.ts"],
+  "include": [
+    "./src",
+    "./dist/types/**/*.ts",
+    "./next-env.d.ts",
+    "lib/__tests__/addItem.test.tsx",
+    "lib/__tests__/removeAllItems.test.tsx",
+    "lib/__tests__/removeItem.test.tsx",
+    "ThemeContext",
+    "utils",
+    "mocks/api",
+    "mocks/mockPeople.ts"
+  ],
   "exclude": ["./node_modules"]
 }
