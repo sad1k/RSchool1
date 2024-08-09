@@ -1,0 +1,48 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body[data-theme="light"] {
+  background-color: aliceblue;
+  color: #000;
+}
+
+body[data-theme="dark"] {
+  background-color: #1a1a1a;
+  color: #fff;
+}
+
+.person-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.searchList {
+  display: flex;
+  margin: 0 auto;
+}
+
+.page {
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  padding: 5px;
+  border-radius: 10px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.darkBtn {
+  background-color: black;
+  color: aliceblue;
+}
+.lightBtn {
+  background-color: aliceblue;
+  color: black;
+}
