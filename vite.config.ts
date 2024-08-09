@@ -11,5 +11,14 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./vitest.setup.ts"],
     include: ["**/?(*.)test.ts?(x)"],
+    exclude: ["node_modules"],
+    coverage: {
+      exclude: [
+        "node_modules",
+        "dist",
+        "**/*.config.*", // Исключаем файлы конфигурации
+        "**/.eslintrc.*", // Исключаем файлы eslint
+      ],
+    },
   },
 });

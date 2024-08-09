@@ -1,14 +1,14 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
-import { afterAll, afterEach, beforeAll } from "vitest";
+import { afterAll, afterEach, beforeAll, vi } from "vitest";
 import { setupServer } from "msw/node";
-import { handlers } from "./src/mocks/api/handlers";
 
 afterEach(() => {
   cleanup();
+  vi.restoreAllMocks();
 });
 
-export const server = setupServer(...handlers);
+export const server = setupServer();
 
 // Start server before all tests
 beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
