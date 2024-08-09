@@ -1,0 +1,11 @@
+.detailSection {
+  border-left: 2px solid #ccc;
+  padding-left: 20px;
+  min-width: 300px;
+  justify-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-height: 500px;
+}
